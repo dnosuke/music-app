@@ -1,4 +1,6 @@
+
 <template>
+
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
@@ -15,7 +17,16 @@
           Quasar App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-btn color="white" text-color="primary">
+Load File
+<input
+    type="file"
+    class="q-uploader__input overflow-hidden absolute-full"
+    v-on:change="fileChosen"
+    ref="fileInput"
+    accept="audio/mpeg"
+/>
+</q-btn>
       </q-toolbar>
     </q-header>
 
@@ -48,10 +59,16 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink'
+import { EventBus } from "../services/event-bus.js";
 
 export default {
   name: 'MainLayout',
-
+  
+methods: {
+    fileChosen(file) {
+        EventBus.$emit("fileChosen", file);
+    }
+},
   components: {
     EssentialLink
   },
@@ -102,8 +119,12 @@ export default {
           icon: 'favorite',
           link: 'https://awesome.quasar.dev'
         }
+        
       ]
     }
   }
 }
 </script>
+<style> 
+
+</style>
